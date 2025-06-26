@@ -13,7 +13,6 @@ class TypingHook:
 
     def _hook_loop(self):
         keyboard.on_press(self._on_key_event)
-        keyboard.wait()  # Keep thread alive
 
     def _on_key_event(self, e):
         if not self.running:
@@ -21,9 +20,9 @@ class TypingHook:
 
         key = e.name
 
-        if key == 'space' or key == 'enter' or key == 'tab':
+        if key in ['space', 'enter', 'tab']:
             if self.buffer:
-                self.on_word_callback(self.buffer)
+                self.on_word_callback(self.buffer, key)
                 self.buffer = ""
         elif key == 'backspace':
             self.buffer = self.buffer[:-1]
